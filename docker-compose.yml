@@ -1,0 +1,32 @@
+services:
+  oiachabot_backend:
+    container_name: oiachabot_backend
+    build: 
+      context: .
+      dockerfile: dockerfile.backend
+    restart: always    
+    network_mode: host    
+    depends_on:
+      - oiachabot_db
+    ports:
+      - '8000:8000'
+
+  oiachabot_db:
+    container_name: oiachabot_db
+    build: 
+      context: ./mysql/
+      dockerfile: dockerfile.db
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'student'
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_CHARACTER_SET_SERVER: 'utf8mb4'
+      MYSQL_COLLATION_SERVER: 'utf8mb4_unicode_ci'
+      LANG: 'C.UTF-8'
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
+    ports:
+      - '3307:3306'
+volumes:
+  mysql_data:

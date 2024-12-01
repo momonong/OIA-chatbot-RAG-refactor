@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enrole</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <!-- A virtual console for dubugging -->
+    <script src="https://cdn.jsdelivr.net/npm/vconsole@3.2.0/dist/vconsole.min.js"></script>
+    <script>
+      var vConsole = new VConsole();
+    </script>    
+    <!-- LIFF -->
+    <script src="https://static.line-scdn.net/liff/edge/versions/2.11.1/sdk.js"></script>     
+    <script>
+        async function submitForm() {
+            await liff.init({ liffId: "{{ liff_id }}" });
+			if (liff.isLoggedIn()) {
+                liff
+                    .getProfile()
+                    .then((profile) => {
+                        //alert('test');
+                        const userid = profile.userId;
+                        const context = liff.getContext();
+                        console.log(context);
+                        //window.alert(context);      
+                        var url = "chatbot.oia.ncku.edu.tw"
+                        window.location.assign("https://chatbot.oia.ncku.edu.tw/register?chat_id="+userid);                        
+                        /*
+                        var info = "{{ _nationality }}"+'&'+"{{ _student_id }}"+'&'+"{{ _name }}"+'&'+"{{ _department }}"+'&'+userid;
+                        fetch(`sign_up/${info}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            window.alert('Successful');
+                            liff.sendMessages([{
+                                type: 'text',
+                                text: info,
+                            }]);
+                            liff.closeWindow();
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });	   */
+                    })
+                    .catch((err) => {
+                        console.log("error", err);
+                    });
+                    
+			}
+            // 顯示取得的值（這裡可以根據需求執行其他操作）
+            console.log("國籍: " + nationality);
+            console.log("學號: " + studentID);
+            console.log("姓名: " + fullName);
+        }
+        window.onload = function() {
+            submitForm();
+        }             
+    </script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #74EBD5 0%, #ACB6E5 100%);
+            color: #333;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin: 0 0 10px;
+            font-size: 24px;
+            color: #444;
+        }
+        p {
+            margin: 0 0 20px;
+            font-size: 16px;
+        }
+        .loader {
+            border: 4px solid rgba(255, 255, 255, 0.6);
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            margin: 20px auto 0;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>    
+</head>
+<body>
+    <div class="container">
+        <h1>請使用LINE內建瀏覽器進行操作</h1>
+        <div class="loader"></div>
+    </div>
+</body>
+</html>

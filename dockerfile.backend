@@ -1,0 +1,16 @@
+FROM python:3.10-slim
+RUN pip install pipenv
+# RUN sudo apt update
+# RUN sudo apt install pipx
+# RUN pipx ensurepath
+# RUN sudo pipx ensurepath --global
+
+COPY . .
+RUN pipenv install
+
+
+# HEALTHCHECK --interval=5s --timeout=3s \
+
+#    CMD pg_isready -h chemicloud_db -p 5432 -U postgres || exit 1
+
+CMD ["pipenv", "run", "python3", "app.py", "-p", "8000"]
