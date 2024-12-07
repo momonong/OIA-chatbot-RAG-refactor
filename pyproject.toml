@@ -7,6 +7,10 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"
+openai = "^1.57.0"
+python-dotenv = "^1.0.1"
+azure-identity = "^1.19.0"
+# azure-ai dependency removed due to incorrect package name; please verify the correct package name and version
 
 
 [build-system]
